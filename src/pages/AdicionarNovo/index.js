@@ -1,4 +1,4 @@
-/*//Hooks React
+//Hooks React
 import React, {useEffect, useState} from "react";
 import "./style.css"; //estilo
 import { toast } from 'react-toastify'
@@ -102,12 +102,11 @@ function AdicionarNovo(){
   );
 }
 //exportar
-export default AdicionarNovo;*/
-import React, { useState } from 'react';
+export default AdicionarNovo;
+/*import React, { useState } from 'react';
 import axios from 'axios';
 
 function AdicionarNovo(){
-const AddRecipe = () => {
   const [form, setForm] = useState({
     name: '',
     category: '',
@@ -116,7 +115,7 @@ const AddRecipe = () => {
   });
 
   const [recipes, setRecipes] = useState([]);
-};
+
 const handleInputChange = (e) => {
   setForm({
     ...form,
@@ -149,7 +148,8 @@ const handleSubmit = async (e) => {
 };
 
 return (
-  <div>
+  <div className='container'>
+    <div  className='post'>
     <h1>Adicionar Receita</h1>
     <form onSubmit={handleSubmit}>
       <label>
@@ -202,9 +202,10 @@ return (
         </li>
       ))}
     </ul>
+    </div>
   </div>
 );
 }
 
-export default AdicionarNovo;  
+export default AdicionarNovo; */
 
