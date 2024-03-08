@@ -1,4 +1,4 @@
-//Hooks React
+/*//Hooks React
 import React, {useEffect, useState} from "react";
 import "./style.css"; //estilo
 import { toast } from 'react-toastify'
@@ -102,10 +102,109 @@ function AdicionarNovo(){
   );
 }
 //exportar
-export default AdicionarNovo;
+export default AdicionarNovo;*/
+import React, { useState } from 'react';
+import axios from 'axios';
 
+function AdicionarNovo(){
+const AddRecipe = () => {
+  const [form, setForm] = useState({
+    name: '',
+    category: '',
+    area: '',
+    instructions: '',
+  });
 
+  const [recipes, setRecipes] = useState([]);
+};
+const handleInputChange = (e) => {
+  setForm({
+    ...form,
+    [e.target.name]: e.target.value,
+  });
+};
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
+  try {
+    const response = await axios.get(
+      `https://www.themealdb.com/api/json/v1/1/search.php?s=${form.name}`
+    );
 
-  
+    if (response.data.meals && response.data.meals.length > 0) {
+      setRecipes([...recipes, ...response.data.meals]);
+      setForm({
+        name: '',
+        category: '',
+        area: '',
+        instructions: '',
+      });
+    } else {
+      alert('Receita não encontrada.');
+    }
+  } catch (error) {
+    console.error('Error fetching recipes:', error);
+    alert('Ocorreu um erro ao buscar a receita.');
+  }
+};
+
+return (
+  <div>
+    <h1>Adicionar Receita</h1>
+    <form onSubmit={handleSubmit}>
+      <label>
+        Nome:
+        <input
+          type="text"
+          name="name"
+          value={form.name}
+          onChange={handleInputChange}
+        />
+      </label>
+      <br />
+      <label>
+        Categoria:
+        <input
+          type="text"
+          name="category"
+          value={form.category}
+          onChange={handleInputChange}
+        />
+      </label>
+      <br />
+      <label>
+        Área:
+        <input
+          type="text"
+          name="area"
+          value={form.area}
+          onChange={handleInputChange}
+        />
+      </label>
+      <br />
+      <label>
+        Instruções:
+        <textarea
+          name="instructions"
+          value={form.instructions}
+          onChange={handleInputChange}
+        />
+      </label>
+      <br />
+      <button type="submit">Adicionar</button>
+    </form>
+    <h2>Lista de Receitas</h2>
+    <ul>
+      {recipes.map((recipe, index) => (
+        <li key={index}>
+          <h3>{recipe.strMeal}</h3>
+          <p>{recipe.strInstructions}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+);
+}
+
+export default AdicionarNovo;  
 
